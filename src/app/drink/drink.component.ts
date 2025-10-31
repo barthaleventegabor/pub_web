@@ -79,5 +79,21 @@ export class DrinkComponent {
     })
   }
 
+  edit(){
+
+  }
+
+  update(){
+
+  }
+
+  delete(id:number){
+    this.drinkApi.deleteDrink$(id).subscribe({
+      next : (result:any)=>{
+        console.log(result);
+        this.getDrinks()
+      }
+    })
+  }
 }
 
