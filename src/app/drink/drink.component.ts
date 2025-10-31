@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { DrinkapiService } from '../shared/drinkapi.service';
 import { FormBuilder, ReactiveFormsModule } from '@angular/forms';
 import { TypeapiService } from '../shared/typeapi.service';
+import { PackageapiService } from '../shared/packageapi.service';
 
 @Component({
   selector: 'app-drink',
@@ -12,20 +13,23 @@ import { TypeapiService } from '../shared/typeapi.service';
 })
 export class DrinkComponent {
 
-  drinkForm!: any;
-  drinks: any;
-  addMode = true;
+  drinkForm!: any
+  drinks: any
+  addMode = true
   types:any
+  packages :any
 
   constructor(
     private drinkApi: DrinkapiService,
     private typeApi: TypeapiService,
+    private packagesApi: PackageapiService,
     private build: FormBuilder
   ){}
 
   ngOnInit() {
     this.getDrinks()
     this.getTypes()
+    this.getPackages()
     this.drinkForm = this.build.group({
       id: [''],
       drink: [''],
@@ -62,6 +66,15 @@ export class DrinkComponent {
       next :(result :any)=>{
         console.log(result.data);
         this.types = result.data
+      }
+    })
+  }
+
+  getPackages(){
+    this.packagesApi.getPackages$().subscribe({
+      next :(result :any)=>{
+        console.log(result.data);
+        this.packages = result.data
       }
     })
   }

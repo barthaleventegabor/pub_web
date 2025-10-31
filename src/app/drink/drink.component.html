@@ -87,16 +87,27 @@ data-bs-toggle="modal" data-bs-target="#operationModal">
                 <label for="type" class="form-label">Típus</label>
                 <select id="" formControlName="type" class="form-control">
                     @for(type of types; track type.id){
-                        <option>{{type.type}}</option>
+                        <option value = "{{type.type}}">{{type.type}}</option>
                     }
 
                 </select>
                 
             </div>
-            <div class="input">
+            <!-- <div class="input">
                 <label for="package" class="form-label">Csomagolás</label>
                 <input type="text" id="package"
                 formControlName="package" class="form-control">
+            </div> -->
+
+            <div class="input">
+                <label for="package" class="form-label">Csomagolás</label>
+                <select id="" formControlName="package" class="form-control">
+                    @for(package of packages; track package.id){
+                        <option value="{{package.package}}">{{package.package}}</option>
+                    }
+
+                </select>
+                
             </div>
 
         </form>
