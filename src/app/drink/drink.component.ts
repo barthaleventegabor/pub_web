@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { DrinkapiService } from '../shared/drinkapi.service';
 import { FormBuilder, ReactiveFormsModule } from '@angular/forms';
+import { TypeapiService } from '../shared/typeapi.service';
 
 @Component({
   selector: 'app-drink',
@@ -14,14 +15,17 @@ export class DrinkComponent {
   drinkForm!: any;
   drinks: any;
   addMode = true;
+  types:any
 
   constructor(
-    private api: DrinkapiService,
+    private drinkApi: DrinkapiService,
+    private typeApi: TypeapiService,
     private build: FormBuilder
   ){}
 
   ngOnInit() {
-    this.getDrinks();
+    this.getDrinks()
+    this.getTypes()
     this.drinkForm = this.build.group({
       id: [''],
       drink: [''],
@@ -34,7 +38,7 @@ export class DrinkComponent {
 
   save() {
     console.log('Mentés...')
-    this.api.createDrink$(this.drinkForm.value).subscribe({
+    this.drinkApi.createDrink$(this.drinkForm.value).subscribe({
       next: (result) => {
         console.log(result);
         this.drinkForm.reset();
@@ -44,7 +48,7 @@ export class DrinkComponent {
   }
 
   getDrinks() {
-    this.api.getDrinks$().subscribe({
+    this.drinkApi.getDrinks$().subscribe({
       next: (result: any) => {
         console.log(result.data);
         this.drinks = result.data;
@@ -52,4 +56,15 @@ export class DrinkComponent {
       error: () => {}
     })
   }
+
+  getTypes(){
+    this.typeApi.getTypes$().subscribe({
+      next :(result :any)=>{
+        console.log(result.data);
+        this.types = result.data
+      }
+    })
+  }
+
 }
+
