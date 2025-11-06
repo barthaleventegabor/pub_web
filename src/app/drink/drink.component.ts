@@ -100,8 +100,18 @@ export class DrinkComponent {
   }
 
   updateDrink(){
-    console.log("Update árnyékeljárás...");
     this.addMode = true;
+    console.log(this.drinkForm.value);
+    this.drinkApi.updateDrink$(this.drinkForm.value).subscribe({
+      next :(result:any)=>{
+        console.log(result);
+        this.drinkForm.reset();
+        this.getDrinks();
+      },
+      error :(err)=>{
+        console.log(err);
+      }
+    })
   }
 
   delete(id:number){
